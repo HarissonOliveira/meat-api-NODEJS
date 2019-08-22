@@ -6,7 +6,7 @@ import { response } from 'spdy';
 class UsersRouter extends Router {
     applyRoutes(application: restify.Server) {
         application.get('/users', (req, resp, next) => {
-            User.findAll().then(users => {
+            User.find().then(users => {
                 resp.json(users);
                 return next();
             });
@@ -18,8 +18,30 @@ class UsersRouter extends Router {
                     resp.json(user);
                     return next();
                 }
-                
                 resp.send(404);
+                return next();
+            });
+        });
+
+        application.post('/users', (req, resp, next) => {
+            let user = new User(req.body);
+            user.save().then(user => {
+                user.password = undefined;
+                resp.json(user);
+                return next();
+            });
+        });
+
+        application.put('/users/:id', (req, resp, next) => {
+            const options = { overwrite: true };
+            User.update({_id: req.params.id}, req.body, options).exec().then(result => {
+                if (result.n) {
+                    return User.findById(req.params.id);
+                } else {
+                    resp.send(404);
+                }
+            }).then(user => {
+                resp.json(user);
                 return next();
             });
         });
@@ -27,42 +49,3 @@ class UsersRouter extends Router {
 }
 
 export const usersRouter = new UsersRouter();
-
-
-
-// Exemplos de endpoints ::
-
-/*
-
-this.application.get('/info', [
-    (req, response, next) => {
-        if (req.userAgent() && req.userAgent().includes('MSIE 7.0')) {
-            // response.status(400);
-            // response.json({ message: 'Please, update your browser' });
-            let error: any = new Error();
-            error.statusCode = 400;
-            error.message = 'Please, update your browser';
-            return next(error);
-        }
-        return next();
-    }, (req, response, next) => {
-        response.json({
-            browser: req.userAgent(),
-            method: req.method,
-            url: req.href(),
-            path: req.path(),
-            query: req.query
-        });
-        return next();
-    }]);
-
-this.application.get('/hello', (req, response, next) => {
-    // response.contentType = 'application/json';
-    // response.status(400);
-    // response.setHeader('Content-Type', 'application/json');
-    // response.send({ message: 'hello' });
-    response.json({ message: 'Hello World' });
-    return next();
-});
-
-*/
