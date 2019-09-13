@@ -2,11 +2,17 @@
 
 ##### Instalação
 
-1º run -> npm init -y
+```sh
+$ npm init -y
+$ npm install
+```
 
-2º run -> npm install
+### Abra dois terminais e execute um comando em cada um dos terminais
 
-3º run in on Terminal      -> tsc -w 
-   run in another Terminal -> nodemon dist/main.ts
 
-In common/environment.ts the SERVER_PORT default value is 3001, you can change as you wish
+```sh
+$ tsc -w
+$ nodemon dist/main.ts
+```
+
+No arquivo common/environment.ts o valor padrão da variável SERVER_PORT é 3001, você pode alterar esse valor conforme desejar
