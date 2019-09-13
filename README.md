@@ -1,6 +1,6 @@
 # Exemplo de API em NodeJS
 
-##### Instalação
+### Instalação
 
 ```sh
 $ npm init -y
