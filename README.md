@@ -3,8 +3,8 @@
 ### Instalação
 
 ```sh
-$ npm init -y
 $ npm install
+$ npm init -y
 ```
 
 ### Abra dois terminais e execute um comando em cada um dos terminais
