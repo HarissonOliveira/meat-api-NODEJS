@@ -15,31 +15,25 @@ class UsersRouter extends ModelRouter<User> {
         });
     }
 
+    findByEmail = (req, resp, next) => {
+        if (req.query.email) {
+            User.find({email: req.query.email})
+                .then(this.renderAll(resp, next))
+                .catch(next)
+        } else {
+            next()
+        }
+    }
+
     applyRoutes(application: restify.Server) {
+        application.get({ path: '/users', version: '2.0.0' }, [this.findByEmail, this.findAll]); // Exemplo de versionamento de rotas
+        application.get({ path: '/users', version: '1.0.0' }, this.findAll);                     // Exemplo de versionamento de rotas
 
-        /*application.get('/users', (req, resp, next) => {
-            User.find().then(this.render(resp, next))
-                .catch(next);
-        });*/
-
-        /*application.get('/users/:id', (req, resp, next) => {
-            User.findById(req.params.id).then(this.render(resp, next))
-                .catch(next);
-        });*/
-
-        /*application.post('/users', (req, resp, next) => {
-            let user = new User(req.body);
-            user.save().then(this.render(resp, next))
-                .catch(next);
-        });*/
-
-        application.get('/users', this.findAll);
         application.get('/users/:id', [this.validateID, this.findById]);
         application.post('/users', this.save);
         application.put('/users/:id', [this.validateID, this.replace]);
         application.patch('/users/:id', [this.validateID, this.update]);
         application.del('/users/:id', [this.validateID, this.delete]);
-
     }
 }
 
