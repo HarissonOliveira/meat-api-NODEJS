@@ -11,8 +11,7 @@ $ npm init -y
 
 
 ```sh
-$ tsc -w
-$ nodemon dist/main.ts
+$ npm start
 ```
 
 No arquivo common/environment.ts o valor padrão da variável SERVER_PORT é 3001, você pode alterar esse valor conforme desejar

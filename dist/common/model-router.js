@@ -16,11 +16,13 @@ class ModelRouter extends router_1.Router {
             }
         };
         this.findAll = (req, resp, next) => {
-            this.model.find().then(this.renderAll(resp, next))
+            this.model.find()
+                .then(this.renderAll(resp, next))
                 .catch(next);
         };
         this.findById = (req, resp, next) => {
-            this.model.findById(req.params.id).then(this.render(resp, next))
+            this.prepareOne(this.model.findById(req.params.id))
+                .then(this.render(resp, next))
                 .catch(next);
         };
         this.save = (req, resp, next) => {
@@ -30,7 +32,8 @@ class ModelRouter extends router_1.Router {
         };
         this.replace = (req, resp, next) => {
             const options = { overwrite: true, runValidators: true };
-            this.model.update({ _id: req.params.id }, req.body, options).exec().then(result => {
+            this.model.update({ _id: req.params.id }, req.body, options)
+                .exec().then(result => {
                 if (result.n) {
                     return this.model.findById(req.params.id);
                 }
@@ -58,6 +61,9 @@ class ModelRouter extends router_1.Router {
                 return next();
             }).catch(next);
         };
+    }
+    prepareOne(query) {
+        return query;
     }
 }
 exports.ModelRouter = ModelRouter;

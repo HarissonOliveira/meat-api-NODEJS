@@ -7,6 +7,10 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
         super();
     }
 
+    protected prepareOne(query: mongoose.DocumentQuery<D, D>): mongoose.DocumentQuery<D, D> {
+        return query
+    }
+
     validateID = (req, resp, next) => {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
             next(new NotFoundError('Document not found'));
@@ -16,12 +20,14 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
     }
 
     findAll = (req, resp, next) => {
-        this.model.find().then(this.renderAll(resp, next))
+        this.model.find()
+            .then(this.renderAll(resp, next))
             .catch(next)
     };
 
     findById = (req, resp, next) => {
-        this.model.findById(req.params.id).then(this.render(resp, next))
+        this.prepareOne(this.model.findById(req.params.id)) 
+            .then(this.render(resp, next))
             .catch(next)
     };
 
@@ -33,7 +39,8 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
 
     replace = (req, resp, next) => {
         const options = { overwrite: true, runValidators: true };
-        this.model.update({ _id: req.params.id }, req.body, options).exec().then(result => {
+        this.model.update({ _id: req.params.id }, req.body, options)
+            .exec().then(result => {
             if (result.n) {
                 return this.model.findById(req.params.id);
             } else {
