@@ -16,6 +16,11 @@ $ npm start
 
 No arquivo common/environment.ts o valor padrão da variável SERVER_PORT é 3001, você pode alterar esse valor conforme desejar
 
+
+
+### Anotações Adicionais
+
+
 ### Os exemplos de teste foram feitos com JEST e SUPERTEST
 
 ```
@@ -24,3 +29,11 @@ $ npm i ts-node@5.0.1 jest-cli@22.4.2 -D -E
 ```
 
 No arquivo package.json na linha abaixo de license tem a configuração do JEST e o script de test também foi reescrito
+
+
+### Autenticação da API foi feita com JWT - Json Web Token
+
+````
+$ npm i jsonwebtoken
+$ npm i @types/jsonwebtoken
+```
