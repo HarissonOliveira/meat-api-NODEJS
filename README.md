@@ -33,7 +33,7 @@ No arquivo package.json na linha abaixo de license tem a configuração do JEST 
 
 ### Autenticação da API foi feita com JWT - Json Web Token
 
-````
+```
 $ npm i jsonwebtoken
 $ npm i @types/jsonwebtoken
 ```
