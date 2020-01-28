@@ -3,6 +3,7 @@ import * as request from 'supertest';
 import { environment } from '../common/environment';
 
 let address: string = (<any>global).address
+const auth: string = (<any>global).auth;
 
 test('get /reviews', () => {
     return request(address)
