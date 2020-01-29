@@ -37,3 +37,12 @@ No arquivo package.json na linha abaixo de license tem a configuração do JEST 
 $ npm i jsonwebtoken
 $ npm i @types/jsonwebtoken
 ```
+
+
+### Gerenciador de processos utilizado -> PM2
+
+```
+$ npm i pm2 -g
+$ pm2 ecosystem simple
+$ pm2 start ecosystem.config.js
+```
