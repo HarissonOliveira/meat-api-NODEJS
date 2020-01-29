@@ -46,3 +46,12 @@ $ npm i pm2 -g
 $ pm2 ecosystem simple
 $ pm2 start ecosystem.config.js
 ```
+
+### Tratamento de CORS
+
+```
+$ npm i restify-cors-middleware -P -E
+$ npm i @types/restify-cors-middleware -D -E
+```
+
+Configuração dos plugins do CORS no arquivo server.ts
